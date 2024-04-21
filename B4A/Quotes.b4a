@@ -1,0 +1,122 @@
+﻿Build1=Default,b4a.example
+File1=diskette.png
+File10=MainPage4.bal
+File11=quotes.png
+File12=RecipeItem.bal
+File13=SubMainPage2.bal
+File14=SubMainPage3.bal
+File15=SubMainPage4.bal
+File16=View.bal
+File2=displayAuthor.bal
+File3=DisplayFacts.bal
+File4=Displayrecipe.bal
+File5=Item.bal
+File6=MainPage.bal
+File7=MainPage1.bal
+File8=MainPage2.bal
+File9=MainPage3.bal
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=appcompat
+Library10=xcustomlistview
+Library11=tabstripviewpager
+Library2=as_tabmenuadvanced
+Library3=b4xpages
+Library4=core
+Library5=json
+Library6=network
+Library7=okhttputils2
+Library8=phone
+Library9=viewsex
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="31"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~AddPermission(android.permission.INTERNET)~\n~AddPermission(android.permission.ACCESS_WIFI_STATE)~\n~AddPermission(android.permission.ACCESS_NETWORK_STATE)~\n~'End of default text.~\n~CreateResourceFromFile(Macro, Core.NetworkClearText)~\n~~\n~'********* TabStrip ***********************~\n~CreateResource(drawable, background_tab.xml, ~\n~<selector xmlns:android="http://schemas.android.com/apk/res/android" ~\n~	android:exitFadeDuration="@android:integer/config_shortAnimTime">~\n~    <item android:state_pressed="true" android:drawable="@color/background_tab_pressed" />~\n~    <item android:state_focused="true" android:drawable="@color/background_tab_pressed"/>~\n~    <item android:drawable="@android:color/transparent"/>~\n~</selector>)~\n~CreateResource(values, colors.xml,~\n~<resources>~\n~    <color name="background_tab_pressed">#FFCECECE</color>~\n~</resources>)~\n~'******************************************
+Module1=|relative|..\B4XMainPage
+Module2=Starter
+Module3=viewQuotes
+NumberOfFiles=16
+NumberOfLibraries=11
+NumberOfModules=3
+Version=12.2
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Notes
+	#VersionCode: 15
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: portrait
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+#AdditionalJar: com.android.support:support-v4
+'#BridgeLogger: True
+
+Sub Process_Globals
+	Public ActionBarHomeClicked As Boolean
+End Sub
+
+Sub Globals
+
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Dim pm As B4XPagesManager
+	pm.Initialize(Activity)
+End Sub
+
+'Template version: B4A-1.01
+#Region Delegates
+
+Sub Activity_ActionBarHomeClick
+	ActionBarHomeClicked = True
+	B4XPages.Delegate.Activity_ActionBarHomeClick
+	ActionBarHomeClicked = False
+End Sub
+
+Sub Activity_KeyPress (KeyCode As Int) As Boolean
+	Return B4XPages.Delegate.Activity_KeyPress(KeyCode)
+End Sub
+
+Sub Activity_Resume
+	B4XPages.Delegate.Activity_Resume
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+	B4XPages.Delegate.Activity_Pause
+End Sub
+
+Sub Activity_PermissionResult (Permission As String, Result As Boolean)
+	B4XPages.Delegate.Activity_PermissionResult(Permission, Result)
+End Sub
+
+Sub Create_Menu (Menu As Object)
+	B4XPages.Delegate.Create_Menu(Menu)
+End Sub
+
+#if Java
+public boolean _onCreateOptionsMenu(android.view.Menu menu) {
+	 processBA.raiseEvent(null, "create_menu", menu);
+	 return true;
+	
+}
+#End If
+#End Region
+
+'Program code should go into B4XMainPage and other pages.
