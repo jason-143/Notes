@@ -19,6 +19,7 @@ Sub Class_Globals
 	
 	Private ss As ServerSocket
 	Public Ip As String = ""
+	Public SetMyIP As String = ""
 	Public link As String
 	Private spnCategory As Spinner
 	Private category As String
@@ -96,13 +97,14 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	B4XPages.GetPage("View_Quotes")
 	
 	ss.Initialize(0, "")
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = "you IP here" Then
 	xui.MsgboxAsync("No internet","Offline")
 	Return
 	Else
 		Log("Ip: "&ss.GetMyIP)
 	End If
-	Ip = "192.168.43.166"
+	Ip = "your local IP here"
+	SetMyIP = "loopback address"
 	link = "http:/"& Ip &"/Quotes/Quotes.php"
 
 	ItemCategory
@@ -129,7 +131,7 @@ Public Sub SetActionBarColor(Color As Int)
 	End If
 End Sub
 Sub Activity_Resume
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("No internet","Offline")
 		Return	
 	Else
@@ -137,7 +139,7 @@ Sub Activity_Resume
 	End If
 End Sub
 Sub Activity_Pause (UserClosed As Boolean)
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("No internet","Offline")
 		Return
 	Else
@@ -155,7 +157,7 @@ Public Sub ItemCategory
 									"marriage", "medical", "men", "mom", "money", "morning", "movies", "success"))
 End Sub
 Public Sub display
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Server connection is lost","Offline")
 		Return
 	Else
@@ -198,7 +200,7 @@ Sub JobDone (Job As HttpJob)
 				quotes = JSON.NextArray
 				
 				If quotes.Size > 0 Then 
-					' For simplicity, let's just display the first quote
+					'display the first quote
 					Dim quoteMap As Map
 					quoteMap = quotes.Get(0)
 					If quoteMap.ContainsKey("quote") And quoteMap.ContainsKey("author") Then
@@ -398,7 +400,7 @@ End Sub
 
 Private Sub spnCategory_ItemClick (Position As Int, Value As Object)
 	Log(Value)
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Internet Connection is lost","Offline")
 		lblQuote.Text = "Connecting..."
 		quote_text.Text = "Connection error"
@@ -421,7 +423,7 @@ Private Sub spnCategory_ItemClick (Position As Int, Value As Object)
 End Sub
 
 Private Sub randomize_Click
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Internet Connection is lost","Offline")
 		Return
 	Else
@@ -439,7 +441,7 @@ Private Sub save_Click
 	Log("quote: "&quote_text.Text)
 	Log("author: "&author.Text)
 	Log("category: "&category)
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Server connection is lost","Offline")
 		Return
 	Else
@@ -450,7 +452,7 @@ End Sub
 
 Private Sub clvSaveQuotes_ItemClick (Index As Int, Value As Object)
 	item_clicked = clvSaveQuotes.GetPanel(Index).GetView(0)   'pnlTitle is First Item on Item layout
-	sam = item_clicked.GetView(0).Text           'lblTitle is first pnlTitle View
+	sam = item_clicked.GetView(0).Text           'lblTitle is first panel Title View
 	Log(sam)
 	B4XPages.MainPage.View_Quotes.displayClickItem(sam)
 	B4XPages.ShowPage("View_Quotes")
@@ -464,7 +466,7 @@ Private Sub clvSaveQuotes_ItemLongClick (Index As Int, Value As Object)
 	Dim sf As Object = xui.Msgbox2Async("Would you like to Delete","Delete Quotes","Delete","","Cancel",Null)
 	Wait For (sf) Msgbox_Result (Result As Int)
 	If Result = DialogResponse.POSITIVE Then
-		
+		'Deletes from the database
 		Dim job As HttpJob
 		job.Initialize("DeleteQuote",Me)
 		job.Download2(link,Array As String("action","DeleteQuote","quotes",sam))
@@ -509,7 +511,7 @@ Public Sub DeleteFacts(fact As String)
 End Sub
 
 Private Sub GenerateFacts_Click
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Internet Connection is lost","Offline")
 		Return
 	Else
@@ -525,7 +527,7 @@ Private Sub GenerateFacts_Click
 End Sub
 
 Private Sub saveFacts_Click
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Server connection is lost","Offline")
 		Return
 	Else
@@ -543,6 +545,7 @@ Private Sub clvSaveFacts_ItemClick (Index As Int, Value As Object)
 	Log(sam)
 	xui.MsgboxAsync(""&sam,"Facts")
 End Sub
+
 Private Sub clvSaveFacts_ItemLongClick (Index As Int, Value As Object)
 	factsClick = clvSaveFacts.GetPanel(Index).GetView(0)   'pnlTitle is First Item on Item layout
 	sam = factsClick.GetView(0).Text           'lblTitle is first pnlTitle View
@@ -582,7 +585,7 @@ End Sub
 
 Private Sub SearchRecipe_Click
 	Dim input As Boolean = txtRecipe.Text.Length > 0
-	If ss.GetMyIP = "127.0.0.1" Then
+	If ss.GetMyIP = SetMyIP Then
 		xui.MsgboxAsync("Internet Connection is lost","Offline")
 		Return
 	Else
